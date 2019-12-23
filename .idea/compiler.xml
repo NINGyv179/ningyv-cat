@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="person01-ningyv-smallcat-eureka-center" />
+        <module name="person02-ningyv-smallcat-portal-view" />
+        <module name="person03-ningyv-smallcat-autho-provider" />
+        <module name="person04-ningyv-smallcat-mysql-data" />
+        <module name="person05-ningyv-smallcat-redis-data" />
+        <module name="person06-ningyv-smallcat-common-library" />
+        <module name="person06-revese" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="demo" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

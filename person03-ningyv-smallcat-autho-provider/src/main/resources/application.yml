@@ -1,0 +1,9 @@
+  server:
+    port: 14000
+  spring:
+    application:
+      name: member-authenticati
+  eureka:
+    client:
+      service-url:
+        defaultZone: http://localhost:9999/eureka/
