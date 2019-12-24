@@ -1,5 +1,7 @@
 package com.ningyv.smallcat.api;
 
+import com.ningyv.smallcat.entity.po.MenberPo;
+import com.ningyv.smallcat.entity.vo.MemberLoginVo;
 import com.ningyv.smallcat.entity.vo.MemberVo;
 import com.ningyv.smallcat.resultEntity.ResultEntity;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -21,4 +23,8 @@ public interface MysqlService {
     //保存会员
     @RequestMapping("/mysql/remote/save/member")
     public ResultEntity<String> saveMember(@RequestBody MemberVo memberVo);
+
+    //查询会员数量
+    @RequestMapping("/select/member/from/form")
+    ResultEntity<MenberPo> getMemberPOByFormVO(@RequestBody MemberLoginVo memberLoginVo);
 }

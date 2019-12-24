@@ -3,6 +3,9 @@ package com.ningyv.smallcat.handler;
 import com.ningyv.smallcat.api.MysqlService;
 import com.ningyv.smallcat.api.RedisService;
 import com.ningyv.smallcat.constant.Constant;
+import com.ningyv.smallcat.entity.po.MenberPo;
+import com.ningyv.smallcat.entity.vo.MemberLoginVo;
+import com.ningyv.smallcat.entity.vo.MemberSuccessVo;
 import com.ningyv.smallcat.entity.vo.MemberVo;
 import com.ningyv.smallcat.resultEntity.ResultEntity;
 import com.ningyv.smallcat.utils.CrowdUtils;
@@ -11,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -123,6 +127,47 @@ public class PersonAuthoHandler {
         memberVo.setUserpswd(userpswd);
         //执行保存
         return mysqlService.saveMember(memberVo);
+    }
+
+
+    //登录
+    @RequestMapping("/member/do/login")
+    public ResultEntity<MemberSuccessVo> doLogin(@RequestBody MemberLoginVo memberLoginVo){
+        //1.验证用户名密码是否正确
+        ResultEntity<MenberPo> resultEntity = mysqlService.getMemberPOByFormVO(memberLoginVo);
+        //判断操作是否成功
+        String result = resultEntity.getResult();
+        if (ResultEntity.FAILED.equals(result)) {
+            return ResultEntity.failed(resultEntity.getMessage());
+        }
+        //获取表单提交的数据封装成MemberPo
+        MenberPo memberPo = resultEntity.getData();
+
+        //如果数据库里面时空的
+        if (memberPo ==null) {
+            return ResultEntity.failed(Constant.MSG_LOGIN_FAILED);
+        }
+
+        //生成token
+        String tokenKey=Constant.PREFIX_MEMBER_LOGIN_TOKEN+UUID.randomUUID()
+                .toString().replaceAll("-", "");
+        String tokenValue = memberPo.getId()+"";
+
+        //3存入redis
+        int timeout = 30;
+        ResultEntity<String> setKeyValueTimeOut = redisService.setKeyValueTimeOut(tokenKey, tokenValue, TimeUnit.MINUTES, timeout);
+
+        if (ResultEntity.FAILED.equals(setKeyValueTimeOut.getResult())) {
+            return ResultEntity.failed(setKeyValueTimeOut.getMessage());
+        }
+
+        //封装MemberSuccessVo
+        MemberSuccessVo memberSuccessVo = new MemberSuccessVo();
+
+        memberSuccessVo.setToken(tokenKey);
+        memberSuccessVo.setUsername(memberPo.getUsername());
+
+        return ResultEntity.successWithData(memberSuccessVo);
     }
 
 }

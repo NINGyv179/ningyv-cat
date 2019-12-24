@@ -2,6 +2,7 @@ package com.ningyv.smallcat.service.impl;
 
 import com.ningyv.smallcat.entity.po.MenberPo;
 import com.ningyv.smallcat.entity.po.MenberPoExample;
+import com.ningyv.smallcat.entity.vo.MemberLoginVo;
 import com.ningyv.smallcat.entity.vo.MemberVo;
 import com.ningyv.smallcat.mapper.MenberPoMapper;
 import com.ningyv.smallcat.service.MemberService;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author LCX
@@ -43,6 +46,26 @@ public class MemberServiceImpl implements MemberService {
         BeanUtils.copyProperties(memberVo,menberPo);
         //执行保存
         menberPoMapper.insertSelective(menberPo);
-
     }
+
+    @Override
+    public MenberPo selectMemberPoByformVo(MemberLoginVo memberLoginVo) {
+        //创建查询化对象
+        MenberPoExample menberPoExample = new MenberPoExample();
+
+        MenberPoExample.Criteria criteria = menberPoExample.createCriteria();
+        //拼接
+        criteria.andLoginacctEqualTo(memberLoginVo.getUsername());
+
+        criteria.andUserpswdEqualTo(memberLoginVo.getUserpswd());
+        //执行查询返回结果
+        List<MenberPo> menberPos = menberPoMapper.selectByExample(menberPoExample);
+
+        if (menberPos == null || menberPos.size()==0){
+            return  null;
+        }
+
+        return  menberPos.get(0);
+    }
+
 }
