@@ -6,6 +6,8 @@ package com.ningyv.smallcat.entity.vo;
  */
 public class MemberSuccessVo {
 
+
+    private String loginacct;
     private String username;
     private String token;
 
@@ -13,9 +15,18 @@ public class MemberSuccessVo {
         super();
     }
 
-    public MemberSuccessVo(String username, String token) {
+    public MemberSuccessVo(String loginacct, String username, String token) {
+        this.loginacct = loginacct;
         this.username = username;
         this.token = token;
+    }
+
+    public String getLoginacct() {
+        return loginacct;
+    }
+
+    public void setLoginacct(String loginacct) {
+        this.loginacct = loginacct;
     }
 
     public String getUsername() {
@@ -37,7 +48,8 @@ public class MemberSuccessVo {
     @Override
     public String toString() {
         return "MemberSuccessVo{" +
-                "username='" + username + '\'' +
+                "loginacct='" + loginacct + '\'' +
+                ", username='" + username + '\'' +
                 ", token='" + token + '\'' +
                 '}';
     }

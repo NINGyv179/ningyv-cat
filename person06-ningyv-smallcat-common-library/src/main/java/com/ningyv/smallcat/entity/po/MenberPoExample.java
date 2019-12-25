@@ -634,73 +634,73 @@ public class MenberPoExample {
             return (Criteria) this;
         }
 
-        public Criteria andCardnumIsNull() {
-            addCriterion("cardnum is null");
+        public Criteria andPhonenumIsNull() {
+            addCriterion("phonenum is null");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumIsNotNull() {
-            addCriterion("cardnum is not null");
+        public Criteria andPhonenumIsNotNull() {
+            addCriterion("phonenum is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumEqualTo(String value) {
-            addCriterion("cardnum =", value, "cardnum");
+        public Criteria andPhonenumEqualTo(String value) {
+            addCriterion("phonenum =", value, "phonenum");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumNotEqualTo(String value) {
-            addCriterion("cardnum <>", value, "cardnum");
+        public Criteria andPhonenumNotEqualTo(String value) {
+            addCriterion("phonenum <>", value, "phonenum");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumGreaterThan(String value) {
-            addCriterion("cardnum >", value, "cardnum");
+        public Criteria andPhonenumGreaterThan(String value) {
+            addCriterion("phonenum >", value, "phonenum");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumGreaterThanOrEqualTo(String value) {
-            addCriterion("cardnum >=", value, "cardnum");
+        public Criteria andPhonenumGreaterThanOrEqualTo(String value) {
+            addCriterion("phonenum >=", value, "phonenum");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumLessThan(String value) {
-            addCriterion("cardnum <", value, "cardnum");
+        public Criteria andPhonenumLessThan(String value) {
+            addCriterion("phonenum <", value, "phonenum");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumLessThanOrEqualTo(String value) {
-            addCriterion("cardnum <=", value, "cardnum");
+        public Criteria andPhonenumLessThanOrEqualTo(String value) {
+            addCriterion("phonenum <=", value, "phonenum");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumLike(String value) {
-            addCriterion("cardnum like", value, "cardnum");
+        public Criteria andPhonenumLike(String value) {
+            addCriterion("phonenum like", value, "phonenum");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumNotLike(String value) {
-            addCriterion("cardnum not like", value, "cardnum");
+        public Criteria andPhonenumNotLike(String value) {
+            addCriterion("phonenum not like", value, "phonenum");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumIn(List<String> values) {
-            addCriterion("cardnum in", values, "cardnum");
+        public Criteria andPhonenumIn(List<String> values) {
+            addCriterion("phonenum in", values, "phonenum");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumNotIn(List<String> values) {
-            addCriterion("cardnum not in", values, "cardnum");
+        public Criteria andPhonenumNotIn(List<String> values) {
+            addCriterion("phonenum not in", values, "phonenum");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumBetween(String value1, String value2) {
-            addCriterion("cardnum between", value1, value2, "cardnum");
+        public Criteria andPhonenumBetween(String value1, String value2) {
+            addCriterion("phonenum between", value1, value2, "phonenum");
             return (Criteria) this;
         }
 
-        public Criteria andCardnumNotBetween(String value1, String value2) {
-            addCriterion("cardnum not between", value1, value2, "cardnum");
+        public Criteria andPhonenumNotBetween(String value1, String value2) {
+            addCriterion("phonenum not between", value1, value2, "phonenum");
             return (Criteria) this;
         }
 

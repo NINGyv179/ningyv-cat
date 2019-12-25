@@ -27,4 +27,8 @@ public interface MysqlService {
     //查询会员数量
     @RequestMapping("/select/member/from/form")
     ResultEntity<MenberPo> getMemberPOByFormVO(@RequestBody MemberLoginVo memberLoginVo);
+
+    //查询手机号是否被占用
+    @RequestMapping("/select/phoneNum/count")
+    ResultEntity<Integer> selectPhoneNum(@RequestParam("phoneNum") String phoneNum);
 }

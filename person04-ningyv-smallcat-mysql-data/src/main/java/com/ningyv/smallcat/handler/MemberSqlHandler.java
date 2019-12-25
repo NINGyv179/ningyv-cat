@@ -51,4 +51,11 @@ public class MemberSqlHandler {
         }
     }
 
+    @RequestMapping("/select/phoneNum/count")
+    ResultEntity<Integer> selectPhoneNum(@RequestParam("phoneNum") String phoneNum){
+        Integer phoneNumCount = memberService.selectPhoneNumCount(phoneNum);
+        return ResultEntity.successWithData(phoneNumCount);
+    }
+
+
 }

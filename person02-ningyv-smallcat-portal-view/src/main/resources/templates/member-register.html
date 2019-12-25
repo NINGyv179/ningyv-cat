@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>登入 - ningyv测试系统</title>
+    <title>注册 - ningyv测试系统</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -11,6 +10,43 @@
     <link rel="stylesheet" href="../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
     <link rel="stylesheet" href="../static/layui/css/admin.css" th:href="@{/layui/css/admin.css}">
     <link rel="stylesheet" href="../static/layui/css/all.css" th:href="@{/layui/css/all.css}">
+    <script src="../static/jquery/jquery-1.7.2.js" th:src="@{/jquery/jquery-1.7.2.js}"></script>
+    <script src="../static/layer/layer.js" th:src="@{/layer/layer.js}"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#sendmessage").click(function () {
+
+                var phoneNum = $.trim($("[name=phonenum]").val());
+                
+                if (phoneNum=="" || phoneNum==null){
+                    layer.msg("请输入手机号");
+                    return;
+                }
+
+                $.ajax({
+                    "url":"[[@{/member/sent/short/message.html}]]",
+                    "type":"post",
+                    "data":{
+                        "phoneNum" :phoneNum
+                    },
+                    "dataType":"json",
+                    "success":function(response){
+                        var result = response.result;
+                        if(result=="FAILED"){
+                            layer.msg(response.message);
+                        }
+                        if(result=="SUCCESS"){
+                            layer.msg("发送成功");
+                        }
+                    },
+                    "error":function(response){
+                        layer.msg(response.responseJSON.message);
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
 
@@ -20,10 +56,10 @@
     <div class="layadmin-user-login-main">
         <div class="layadmin-user-login-box layadmin-user-login-header">
             <h2>NINGYV</h2>
-            <p>ningyv官方测试系统</p>
+            <p>ningyv官方测试注册系统</p>
             <p th:text="${MESSAGE}">""</p>
         </div>
-        <form th:action="@{/member/do/login.html}" method="post">
+        <form th:action="@{/member/to/register.html}" method="post">
         <div
                 class="layadmin-user-login-box layadmin-user-login-body layui-form">
 
@@ -35,7 +71,7 @@
 
                 <!-- input的name属性值必须符合SpringSecurity规则，除非专门进行了定制，否则用户名必须使用username，密码必须使用password -->
                 <input type="text"
-                       name="username" id="LAY-user-login-username" lay-verify="required"
+                       name="loginacct" id="LAY-user-login-username" lay-verify="required"
                        placeholder="用户名" class="layui-input">
             </div>
             <div class="layui-form-item">
@@ -46,17 +82,28 @@
                                                                       placeholder="密码" class="layui-input">
             </div>
             <div class="layui-form-item">
+
+                <label
+                        class="layadmin-user-login-icon layui-icon layui-icon-username"
+                        for="LAY-user-login-username"></label>
+
+                <!-- input的name属性值必须符合SpringSecurity规则，除非专门进行了定制，否则用户名必须使用username，密码必须使用password -->
+                <input type="text"
+                       name="phonenum"  lay-verify="required"
+                       placeholder="手机号" class="layui-input">
+            </div>
+            <div class="layui-form-item">
                 <div class="layui-row">
                     <div class="layui-col-xs7">
                         <label
                                 class="layadmin-user-login-icon layui-icon layui-icon-vercode"
                                 for="LAY-user-login-vercode"></label> <input type="text"
-                                                                             name="vercode" id="LAY-user-login-vercode" lay-verify="required"
-                                                                             placeholder="图形验证码" class="layui-input">
+                                                                             name="randomCode" id="LAY-user-login-vercode" lay-verify="required"
+                                                                             placeholder="验证码" class="layui-input">
                     </div>
                     <div class="layui-col-xs5">
                         <div style="margin-left: 10px;">
-                            <img alt="验证码" onclick="this.src='/defaultKaptcha?d='+new Date()*1" src="/defaultKaptcha" />
+                            <button type="button" id="sendmessage"  class="layadmin-user-login-codeimg" style="height: 150px" >发送验证码</button>
                         </div>
                     </div>
                 </div>
@@ -64,21 +111,20 @@
 
             <div class="layui-form-item" style="margin-bottom: 20px;">
                 <input type="checkbox" name="remember-me" lay-skin="primary"
-                       title="记住我"> <a href="/forget/password.html"
+                       title="记住我"> <a href="/back/portal.html"
                                        class="layadmin-user-jump-change layadmin-link"
-                                       style="margin-top: 7px;">忘记密码？</a>
+                                       style="margin-top: 7px;">返回登录</a>
             </div>
             <div class="layui-form-item">
                 <button type="submit" class="layui-btn layui-btn-fluid" lay-submit
-                        lay-filter="LAY-user-login-submit">登 入</button>
+                        lay-filter="LAY-user-login-submit">注 册</button>
             </div>
             <div class="layui-trans layui-form-item layadmin-user-login-other">
-                <label>社交账号登入</label> <a href="/other/error.html"><i
-                    class="layui-icon layui-icon-login-qq"></i></a> <a href="/other/error.html"><i
+                <label>社交账号登入</label> <a href="javascript:;"><i
+                    class="layui-icon layui-icon-login-qq"></i></a> <a href="javascript:;"><i
                     class="layui-icon layui-icon-login-wechat"></i></a> <a
-                    href="/other/error.html"><i
-                    class="layui-icon layui-icon-login-weibo"></i></a> <a href="/to/member/register.html"
-                                                                          class="layadmin-user-jump-change layadmin-link">注册帐号</a>
+                    href="javascript:;"><i
+                    class="layui-icon layui-icon-login-weibo"></i></a>
             </div>
         </div>
         </form>
@@ -86,7 +132,7 @@
 
     <div class="layui-trans layadmin-user-login-footer">
         <p>
-            © 2019 <a href="/other/error.html" target="_blank">ningyv.com</a>
+            © 2019 <a href="http://www.layui.com/" target="_blank">ningyv.com</a>
         </p>
     </div>
 

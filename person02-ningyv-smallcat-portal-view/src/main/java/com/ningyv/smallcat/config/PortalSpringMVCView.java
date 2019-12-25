@@ -12,5 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class PortalSpringMVCView implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/to/member/register.html").setViewName("menber-register");
+        registry.addViewController("/back/portal.html").setViewName("portal");
     }
 }

@@ -25,6 +25,7 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     private MenberPoMapper menberPoMapper;
 
+    //查询会员数量
     @Override
     public Integer getMemberLoginCount(String loginacct) {
 
@@ -36,6 +37,7 @@ public class MemberServiceImpl implements MemberService {
         return menberPoMapper.countByExample(example);
     }
 
+    //保存会员
     @Override
     @Transactional(readOnly = false,propagation = Propagation.REQUIRES_NEW,rollbackFor = Exception.class)
     public void saveMember(MemberVo memberVo) {
@@ -48,6 +50,7 @@ public class MemberServiceImpl implements MemberService {
         menberPoMapper.insertSelective(menberPo);
     }
 
+    //获取会员
     @Override
     public MenberPo selectMemberPoByformVo(MemberLoginVo memberLoginVo) {
         //创建查询化对象
@@ -66,6 +69,14 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return  menberPos.get(0);
+    }
+
+    //查询手机号
+    @Override
+    public Integer selectPhoneNumCount(String phoneNum) {
+        MenberPoExample menberPoExample = new MenberPoExample();
+        menberPoExample.createCriteria().andPhonenumEqualTo(phoneNum);
+        return menberPoMapper.countByExample(menberPoExample);
     }
 
 }

@@ -29,13 +29,16 @@
     <script type="text/javascript">
         var username = "[[${LOGIN_MEMBER.username}]]";
         var token = "[[${LOGIN_MEMBER.token}]]";
+        var loginacct = "[[${LOGIN_MEMBER.loginacct}]]";
 
+        console.log(loginacct);
         console.log(username);
         console.log(token);
         //这里可以保存信息到下一次操作，时间是一次会话
         sessionStorage.loginSuccessMember =JSON.stringify({
             "username":username,
-            "token":token
+            "token":token,
+            "loginacct":loginacct
         });
         console.log(sessionStorage);
     </script>
@@ -99,7 +102,7 @@
                         </div>
                     </div>
                 </div>
-                <h1 class="title"><span th:text="${LOGIN_MEMBER.username}">这里显示用户昵称</span></h1>
+                <h1 class="title"><span th:text="${LOGIN_MEMBER.loginacct}">这里显示用户昵称</span></h1>
                 <h2 class="title_h2">千里之行，始于足下</h2>
                 <div id="box01_text">
                 <p class="box01_p">不久前还只是一个憨憨.</p>

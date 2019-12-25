@@ -10,10 +10,10 @@ import com.ningyv.smallcat.utils.CrowdUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.thymeleaf.spring5.context.SpringContextUtils;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 /**
  * @author LCX
@@ -25,18 +25,45 @@ public class MemberHandler {
     @Autowired
     public AuthoService authoService;
 
+
+    //登录
     @RequestMapping("/member/do/login.html")
-    public String doLogin(MemberLoginVo memberVo, Model model){
+    public String doLogin(MemberLoginVo memberVo, Model model,HttpServletRequest httpServletRequest){
 
+        //获取图片的验证码
+        String rightCode = (String) httpServletRequest.getSession().getAttribute("rightCode");
+        //获取用户输入的验证码
+        String tryCode = httpServletRequest.getParameter("vercode");
+
+        if (!Objects.equals(rightCode,tryCode)){
+            //设置错误信息
+            model.addAttribute(Constant.ATTR_NAME_ERROR_MESSAGE,Constant.MSG_ERROE_YANZHENGMA_MEMBER);
+
+            //返回注册页面
+            return "portal";
+        }
+
+        //获取用户输入的密码
         String userpswd = memberVo.getUserpswd();
+        //如果密码格式错误
+        if (!CrowdUtils.stringEffectCheck(userpswd)){
+            //设置错误信息
+            model.addAttribute(Constant.ATTR_NAME_ERROR_MESSAGE,Constant.MSG_ERROE_MEMBER);
 
-        System.out.println(userpswd);
+            //返回注册页面
+            return "portal";
+        }
+
+        //加密输入的密码，和数据库的作比对
         userpswd = CrowdUtils.md5(userpswd);
 
+        //把加密后的密码重新设置回去
         memberVo.setUserpswd(userpswd);
 
+        //执行登录
         ResultEntity<MemberSuccessVo> memberVoResultEntity = authoService.doLogin(memberVo);
 
+        //如果登陆失败
         if (ResultEntity.FAILED.equals(memberVoResultEntity.getResult())){
 
             model.addAttribute(Constant.ATTR_NAME_ERROR_MESSAGE,memberVoResultEntity.getMessage());
@@ -44,12 +71,87 @@ public class MemberHandler {
             return "portal";
         }
 
+        //获取用户信息然后保存到数据域
         MemberSuccessVo data = memberVoResultEntity.getData();
 
         model.addAttribute(Constant.ATTR_NAME_LOGIN_MEMBER,data);
 
+        //跳转到会员中心页面
         return "member-conter";
-
-
     }
+
+    //发消息
+    @ResponseBody
+    @RequestMapping("/member/sent/short/message.html")
+    public ResultEntity<String> sendMessage(@RequestParam("phoneNum") String phoneNum){
+        //发消息
+        return authoService.sendMessage(phoneNum);
+    }
+
+    //注册
+    @RequestMapping("/member/to/register.html")
+    public String toRegister(MemberVo memberVo,Model model){
+
+        if (memberVo==null){
+            model.addAttribute(Constant.ATTR_NAME_ERROR_MESSAGE,Constant.MSG_ERROE_MEMBER);
+            return "member-register";
+        }
+
+        System.out.println(memberVo);
+
+        //获取输入的密码
+        String userpswd = memberVo.getUserpswd();
+        if (!CrowdUtils.stringEffectCheck(userpswd)){
+            //设置错误信息
+            model.addAttribute(Constant.ATTR_NAME_ERROR_MESSAGE,Constant.MSG_ERROE_MEMBER);
+
+            //返回注册页面
+            return "member-register";
+        }
+
+        //密码加密
+        userpswd = CrowdUtils.md5(userpswd);
+
+        //把加密后的密码重新设置回去
+        memberVo.setUserpswd(userpswd);
+
+        System.out.println(memberVo);
+
+        //执行注册
+        ResultEntity<String> stringResultEntity = authoService.doRegister(memberVo);
+
+        if (ResultEntity.FAILED.equals(stringResultEntity.getResult())){
+
+            //设置错误信息
+            model.addAttribute(Constant.ATTR_NAME_ERROR_MESSAGE,stringResultEntity.getMessage());
+
+            //返回注册页面
+            return "member-register";
+        }
+        //跳转到登录页面
+        return "portal";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

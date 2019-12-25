@@ -8,18 +8,18 @@ public class MemberVo {
         private String loginacct;
     private String username;
     private String userpswd;
-    private String phoneNum;
+    private String phonenum;
     private String randomCode;
 
     public MemberVo() {
         super();
     }
 
-    public MemberVo(String loginacct, String username, String userpswd, String phoneNum, String randomCode) {
+    public MemberVo(String loginacct, String username, String userpswd, String phonenum, String randomCode) {
         this.loginacct = loginacct;
         this.username = username;
         this.userpswd = userpswd;
-        this.phoneNum = phoneNum;
+        this.phonenum = phonenum;
         this.randomCode = randomCode;
     }
 
@@ -47,12 +47,12 @@ public class MemberVo {
         this.userpswd = userpswd;
     }
 
-    public String getPhoneNum() {
-        return phoneNum;
+    public String getPhonenum() {
+        return phonenum;
     }
 
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
+    public void setPhonenum(String phonenum) {
+        this.phonenum = phonenum;
     }
 
     public String getRandomCode() {
@@ -69,7 +69,7 @@ public class MemberVo {
                 "loginacct='" + loginacct + '\'' +
                 ", username='" + username + '\'' +
                 ", userpswd='" + userpswd + '\'' +
-                ", phoneNum='" + phoneNum + '\'' +
+                ", phonenum='" + phonenum + '\'' +
                 ", randomCode='" + randomCode + '\'' +
                 '}';
     }

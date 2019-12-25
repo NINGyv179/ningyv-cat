@@ -16,4 +16,6 @@ public interface MemberService {
     void saveMember(MemberVo memberVo);
 
     MenberPo selectMemberPoByformVo(MemberLoginVo memberLoginVo);
+
+    Integer selectPhoneNumCount(String phoneNum);
 }

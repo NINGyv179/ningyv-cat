@@ -10,7 +10,6 @@ import com.ningyv.smallcat.entity.vo.MemberVo;
 import com.ningyv.smallcat.resultEntity.ResultEntity;
 import com.ningyv.smallcat.utils.CrowdUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
@@ -37,6 +36,8 @@ public class PersonAuthoHandler {
             return ResultEntity.failed(Constant.MSG_STRING_ERROR);
         }
 
+       ResultEntity<Integer> resultEntityPhoneNum = mysqlService.selectPhoneNum(phoneNum);
+
         //获取随机验证码，长度是4
         int length = 4;
         String randNum = CrowdUtils.getRandNum(length);
@@ -56,9 +57,11 @@ public class PersonAuthoHandler {
         return resultEntity;
     }
 
+    //注册
     @RequestMapping("/do/member/to/register")  //传入一个VO对象   注册有账号 密码 手机号 验证码
-    public ResultEntity<String> doRegister( MemberVo memberVo){
-        System.err.println("!!!!!!!!!!!!!!!!!!!1");
+    public ResultEntity<String> doRegister(@RequestBody MemberVo memberVo){
+
+        System.err.println(memberVo);
 
         //判断输入的验证码是否有效
         String randomCode = memberVo.getRandomCode();
@@ -67,7 +70,7 @@ public class PersonAuthoHandler {
         }
 
         //判断输入的手机号是否有效
-        String phoneNum = memberVo.getPhoneNum();
+        String phoneNum = memberVo.getPhonenum();
         if (!CrowdUtils.stringEffectCheck(phoneNum)){
             return ResultEntity.failed(Constant.MSG_STRING_NUMBER_ERROR);
         }
@@ -115,16 +118,18 @@ public class PersonAuthoHandler {
             return ResultEntity.failed(Constant.MSG_STRING_MORE_MEMBER);
         }
 
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        //检查手机号是否被占用
+        ResultEntity<Integer> num = mysqlService.selectPhoneNum(phoneNum);
 
-        String userpswd = memberVo.getUserpswd();
-        if (!CrowdUtils.stringEffectCheck(userpswd)){
-            return ResultEntity.failed(Constant.MSG_STRING_PAWD_ERROR);
+        if (ResultEntity.FAILED.equals(num.getResult())){
+            return ResultEntity.failed(num.getMessage());
+        }
+        Integer numCount = num.getData();
+
+        if (numCount>0){
+            return ResultEntity.failed(Constant.MSG_STRING_MORE_PHONENUM);
         }
 
-        userpswd = bCryptPasswordEncoder.encode(userpswd);
-
-        memberVo.setUserpswd(userpswd);
         //执行保存
         return mysqlService.saveMember(memberVo);
     }
@@ -166,6 +171,7 @@ public class PersonAuthoHandler {
 
         memberSuccessVo.setToken(tokenKey);
         memberSuccessVo.setUsername(memberPo.getUsername());
+        memberSuccessVo.setLoginacct(memberPo.getLoginacct());
 
         return ResultEntity.successWithData(memberSuccessVo);
     }

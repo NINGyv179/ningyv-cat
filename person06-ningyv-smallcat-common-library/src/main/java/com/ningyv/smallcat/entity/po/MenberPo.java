@@ -17,7 +17,7 @@ public class MenberPo {
 
     private String realname;
 
-    private String cardnum;
+    private String phonenum;
 
     private Byte accttype;
 
@@ -85,12 +85,12 @@ public class MenberPo {
         this.realname = realname == null ? null : realname.trim();
     }
 
-    public String getCardnum() {
-        return cardnum;
+    public String getPhonenum() {
+        return phonenum;
     }
 
-    public void setCardnum(String cardnum) {
-        this.cardnum = cardnum == null ? null : cardnum.trim();
+    public void setPhonenum(String phonenum) {
+        this.phonenum = phonenum == null ? null : phonenum.trim();
     }
 
     public Byte getAccttype() {
