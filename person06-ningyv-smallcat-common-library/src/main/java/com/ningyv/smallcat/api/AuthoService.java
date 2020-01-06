@@ -27,4 +27,8 @@ public interface AuthoService {
     //注册
     @RequestMapping("/do/member/to/register")  //传入一个VO对象   注册有账号 密码 手机号 验证码
     public ResultEntity<String> doRegister(@RequestBody MemberVo memberVo);
+
+    //检查是否登录
+    @RequestMapping("/member/authentication/check/token/ffective")
+    public ResultEntity<String> checkTokenFfective(@RequestParam(value = "token",required = false) String token);
 }

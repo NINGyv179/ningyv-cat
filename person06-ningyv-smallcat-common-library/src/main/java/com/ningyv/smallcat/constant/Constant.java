@@ -20,4 +20,7 @@ public class Constant {
     public static final Object MSG_ERROE_MEMBER = "请输入信息";
     public static final String MSG_STRING_MORE_PHONENUM = "手机号被占用";
     public static final Object MSG_ERROE_YANZHENGMA_MEMBER = "验证码错误";
+    public static final String MSG_ACCESS_DENY ="请登录以后再操作" ;
+    public static final String ATTR_NAME_MESSAGE ="MESSAGE" ;
+    public static final String MSG_STRING_MORE_MEMBER_LOGIN ="账号已经登录" ;
 }

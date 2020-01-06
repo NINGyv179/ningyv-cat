@@ -154,8 +154,20 @@ public class PersonAuthoHandler {
         }
 
         //生成token
-        String tokenKey=Constant.PREFIX_MEMBER_LOGIN_TOKEN+UUID.randomUUID()
-                .toString().replaceAll("-", "");
+        String tokenKey=Constant.PREFIX_MEMBER_LOGIN_TOKEN+memberPo.getId()+memberLoginVo.getUserpswd();
+        //解开就可以实现单个登录
+/*
+        ResultEntity<String> valueByKey = redisService.getValueByKey(tokenKey);
+        if (ResultEntity.FAILED.equals(resultEntity.getResult())) {
+            return ResultEntity.failed(Constant.ATTR_NAME_MESSAGE);
+        }
+        String data = valueByKey.getData();
+        //成功了获取数据
+
+        if (data!=null) {
+            return ResultEntity.failed(Constant.MSG_STRING_MORE_MEMBER_LOGIN);
+        }*/
+
         String tokenValue = memberPo.getId()+"";
 
         //3存入redis
@@ -174,6 +186,35 @@ public class PersonAuthoHandler {
         memberSuccessVo.setLoginacct(memberPo.getLoginacct());
 
         return ResultEntity.successWithData(memberSuccessVo);
+    }
+
+    @RequestMapping("/member/authentication/check/token/ffective")
+    public ResultEntity<String> checkTokenFfective(@RequestParam(value = "token",required = false) String token){
+
+        //检查token是否有效，无效直接判定登录无效
+        if (!CrowdUtils.stringEffectCheck(token)) {
+            return ResultEntity.failed(Constant.MSG_ACCESS_DENY);
+        }
+
+        //根据token查询用户状态
+        ResultEntity<String> resultEntity = redisService.getValueByKey(token);
+        //判断是否成功
+        if (ResultEntity.FAILED.equals(resultEntity.getResult())) {
+            return resultEntity;
+        }
+        //成功了获取数据
+        String memberId = resultEntity.getData();
+
+        if (memberId==null) {
+            return ResultEntity.failed(Constant.MSG_ACCESS_DENY);
+        }
+
+        //刷新过期时间
+        redisService.setKeyValueTimeOut(token, memberId, TimeUnit.MINUTES, 30);
+
+        return ResultEntity.successWithoutData();
+
+
     }
 
 }

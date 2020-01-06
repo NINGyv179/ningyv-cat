@@ -45,6 +45,7 @@ public class MemberHandler {
 
         //获取用户输入的密码
         String userpswd = memberVo.getUserpswd();
+        System.err.println(userpswd);
         //如果密码格式错误
         if (!CrowdUtils.stringEffectCheck(userpswd)){
             //设置错误信息
