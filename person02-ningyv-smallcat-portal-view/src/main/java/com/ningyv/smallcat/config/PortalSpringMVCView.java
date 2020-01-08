@@ -14,5 +14,6 @@ public class PortalSpringMVCView implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/to/member/register.html").setViewName("menber-register");
         registry.addViewController("/back/portal.html").setViewName("portal");
+        registry.addViewController("/member/to/center.html").setViewName("member-conter");
     }
 }

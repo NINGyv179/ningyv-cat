@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Objects;
 
 /**
@@ -27,20 +28,20 @@ public class MemberHandler {
 
 
     //登录
+    @ResponseBody
     @RequestMapping("/member/do/login.html")
-    public String doLogin(MemberLoginVo memberVo, Model model,HttpServletRequest httpServletRequest){
+    public ResultEntity<String> doLogin(MemberLoginVo memberVo, Model model, HttpServletRequest httpServletRequest){
 
         //获取图片的验证码
         String rightCode = (String) httpServletRequest.getSession().getAttribute("rightCode");
         //获取用户输入的验证码
         String tryCode = httpServletRequest.getParameter("vercode");
-
         if (!Objects.equals(rightCode,tryCode)){
             //设置错误信息
             model.addAttribute(Constant.ATTR_NAME_ERROR_MESSAGE,Constant.MSG_ERROE_YANZHENGMA_MEMBER);
 
-            //返回注册页面
-            return "portal";
+            //返回错误信息
+            return ResultEntity.failed(Constant.MSG_STRING_RANDOM_ERROR);
         }
 
         //获取用户输入的密码
@@ -51,8 +52,8 @@ public class MemberHandler {
             //设置错误信息
             model.addAttribute(Constant.ATTR_NAME_ERROR_MESSAGE,Constant.MSG_ERROE_MEMBER);
 
-            //返回注册页面
-            return "portal";
+            //返回错误信息
+            return ResultEntity.failed(Constant.MSG_ERROE_MEMBER_TO);
         }
 
         //加密输入的密码，和数据库的作比对
@@ -69,7 +70,9 @@ public class MemberHandler {
 
             model.addAttribute(Constant.ATTR_NAME_ERROR_MESSAGE,memberVoResultEntity.getMessage());
 
-            return "portal";
+
+            //返回错误信息
+            return ResultEntity.failed(memberVoResultEntity.getMessage());
         }
 
         //获取用户信息然后保存到数据域
@@ -78,7 +81,7 @@ public class MemberHandler {
         model.addAttribute(Constant.ATTR_NAME_LOGIN_MEMBER,data);
 
         //跳转到会员中心页面
-        return "member-conter";
+        return ResultEntity.successWithoutData();
     }
 
     //发消息
@@ -90,12 +93,14 @@ public class MemberHandler {
     }
 
     //注册
+    @ResponseBody
     @RequestMapping("/member/to/register.html")
-    public String toRegister(MemberVo memberVo,Model model){
+    public ResultEntity<String> toRegister(MemberVo memberVo,Model model){
 
         if (memberVo==null){
             model.addAttribute(Constant.ATTR_NAME_ERROR_MESSAGE,Constant.MSG_ERROE_MEMBER);
-            return "member-register";
+            //return "member-register";
+            return ResultEntity.failed(Constant.MSG_ERROE_MEMBER_TO);
         }
 
         System.out.println(memberVo);
@@ -107,7 +112,8 @@ public class MemberHandler {
             model.addAttribute(Constant.ATTR_NAME_ERROR_MESSAGE,Constant.MSG_ERROE_MEMBER);
 
             //返回注册页面
-            return "member-register";
+            //return "member-register";
+            return ResultEntity.failed(Constant.MSG_ERROE_MEMBER_TO);
         }
 
         //密码加密
@@ -127,10 +133,11 @@ public class MemberHandler {
             model.addAttribute(Constant.ATTR_NAME_ERROR_MESSAGE,stringResultEntity.getMessage());
 
             //返回注册页面
-            return "member-register";
+          //  return "member-register";
+            return ResultEntity.failed(stringResultEntity.getMessage());
         }
         //跳转到登录页面
-        return "portal";
+        return ResultEntity.successWithoutData();
     }
 
 

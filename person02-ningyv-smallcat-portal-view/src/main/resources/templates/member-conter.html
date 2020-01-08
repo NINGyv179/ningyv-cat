@@ -26,22 +26,6 @@
         //设定rem值
         document.getElementsByTagName("html")[0].style.fontSize = document.documentElement.clientWidth/20 + 'px';
     </script>
-    <script type="text/javascript">
-        var username = "[[${LOGIN_MEMBER.username}]]";
-        var token = "[[${LOGIN_MEMBER.token}]]";
-        var loginacct = "[[${LOGIN_MEMBER.loginacct}]]";
-
-        console.log(loginacct);
-        console.log(username);
-        console.log(token);
-        //这里可以保存信息到下一次操作，时间是一次会话
-        sessionStorage.loginSuccessMember =JSON.stringify({
-            "username":username,
-            "token":token,
-            "loginacct":loginacct
-        });
-        console.log(sessionStorage);
-    </script>
 </head>
 <body>
 	<header class="head">
@@ -71,7 +55,10 @@
     
     <div class="wrapBox" id="wrapBox">
         <div class="box">
+
+            <!--要改成个人的头像！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
             <img class="box_bg" src="../static/images/upload/pic_1.jpg" th:src="@{/images/upload/pic_1.jpg}">
+            <!--要改成个人的头像！！！！！！！有空再做！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
             <div class="box01_content">
                 <div class="head_div">
                     <div class="cycle_item">
@@ -102,12 +89,14 @@
                         </div>
                     </div>
                 </div>
-                <h1 class="title"><span th:text="${LOGIN_MEMBER.loginacct}">这里显示用户昵称</span></h1>
-                <h2 class="title_h2">千里之行，始于足下</h2>
+
+                <!--要改成个人的信息！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
+                <!--    <h1 class="title"><span th:text="${LOGIN_MEMBER.loginacct}">这里显示用户昵称</span></h1>-->
+                <h2 class="title_h2">千里之行，始于足下</h2>  <!--information1-->
                 <div id="box01_text">
-                <p class="box01_p">不久前还只是一个憨憨.</p>
-                <p class="box01_p">现在还只是一只喜欢动漫和文学的学生党.</p>
-                <p class="box01_p">不久以后将是又一个人生迷茫的旅行者.</p>
+                <p class="box01_p">不久前还只是一个憨憨.</p>   <!--information2-->
+                <p class="box01_p">现在还只是一只喜欢动漫和文学的学生党.</p><!--information3-->
+                <p class="box01_p">不久以后将是又一个人生迷茫的旅行者.</p><!--information4-->
                 </div>
             </div>
             <div class="arrow_div">
@@ -120,6 +109,7 @@
             
             <div class="box02_content box_content">
                 <div id='bar_container' class="bar_container">
+                    <!--要改成个人的信息！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
                     <div class='bar mint' data-percent='70' data-skill='HTML5+CSS3'></div>
                     <div class='bar red' data-percent='50' data-skill='JavaScript'></div>
                     <div class='bar lila' data-percent='50' data-skill='前端工程化'></div>
@@ -129,6 +119,7 @@
                     <div class="bar green" data-percent='60' data-skill='绘画'></div>
                 </div>
                 <div id="box02_text">
+                    <!--要改成个人的信息！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
                     <h1>About Skill</h1>
                     <div class="overline"></div>
                     <p>2017,第一次接触是C/C++,在拥挤的实验室</p>
@@ -154,10 +145,12 @@
         </div>
         
         <div class="box">
+            <!--要改成个人的信息！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
             <img class="box_bg" src="../static/images/upload/pic_3.jpg" th:src="@{/images/upload/pic_3.jpg}">
-            
+            <!--要改成个人的信息！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
             <div class="box_content box03_content">
                 <ul id="timeUl" class="timeUl">
+                    <!--要改成个人的信息！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
                     <li>
                         <div>
                             <h1>2017-Now</h1>
@@ -209,14 +202,16 @@
         
         
         <div class="box">
-            
+            <!--要改成个人的信息！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
             <img class="box_bg" src="../static/images/upload/pic_4.jpg" th:src="@{/images/upload/pic_4.jpg}">
+            <!--要改成个人的信息！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
             <div class="box_content box04_content">
                 <h1 class="box04_title">Something Of Hobby</h1>
                 <ul class="hobby_content">
                     <li class="hobby_01">
                         <div class="hobby_img_div">
                             <div class="spinner spinner_01"></div>
+                            <!--要改成个人的信息！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
                             <div class="hobby_img">
                                 <img src="../static/images/upload/kapok.jpg" th:src="@{/images/upload/kapok.jpg}">
                             </div>

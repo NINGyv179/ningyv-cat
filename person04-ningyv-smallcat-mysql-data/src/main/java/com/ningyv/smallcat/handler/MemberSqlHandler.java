@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class MemberSqlHandler {
+
     @Autowired
     private MemberService memberService;
 

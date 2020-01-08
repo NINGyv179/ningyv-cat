@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class PortalHandler {
     @RequestMapping("/")
     public String goPortal(){
-        return "portal";
+        return "index";
     }
 
     @RequestMapping("/to/member/register.html")
