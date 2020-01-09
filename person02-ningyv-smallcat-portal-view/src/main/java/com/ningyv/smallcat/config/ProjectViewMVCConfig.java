@@ -44,6 +44,7 @@ public class ProjectViewMVCConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/ace/**")
                 .excludePathPatterns("/bootstrap-table/**")
                 .excludePathPatterns("/bootstrap-tour/**")
+                .excludePathPatterns("/to/privacy.html")
                 .excludePathPatterns("/stylesheets/**")
                 .excludePathPatterns("/")
                 .excludePathPatterns("/member/do/login.html")

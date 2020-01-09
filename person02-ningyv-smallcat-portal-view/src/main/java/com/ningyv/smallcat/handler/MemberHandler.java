@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Objects;
 
 /**
@@ -30,7 +29,7 @@ public class MemberHandler {
     //登录
     @ResponseBody
     @RequestMapping("/member/do/login.html")
-    public ResultEntity<String> doLogin(MemberLoginVo memberVo, Model model, HttpServletRequest httpServletRequest){
+    public ResultEntity<ResultEntity<MemberSuccessVo>> doLogin(MemberLoginVo memberVo, Model model, HttpServletRequest httpServletRequest){
 
         //获取图片的验证码
         String rightCode = (String) httpServletRequest.getSession().getAttribute("rightCode");
@@ -81,7 +80,7 @@ public class MemberHandler {
         model.addAttribute(Constant.ATTR_NAME_LOGIN_MEMBER,data);
 
         //跳转到会员中心页面
-        return ResultEntity.successWithoutData();
+        return ResultEntity.successWithData(memberVoResultEntity);
     }
 
     //发消息

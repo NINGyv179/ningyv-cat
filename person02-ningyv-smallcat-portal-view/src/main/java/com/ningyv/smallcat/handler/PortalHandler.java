@@ -28,4 +28,9 @@ public class PortalHandler {
     public String otherError(){
         return "other-error";
     }
+
+    @RequestMapping("/to/privacy.html")
+    public String toPrivate(){
+        return "privacy";
+    }
 }

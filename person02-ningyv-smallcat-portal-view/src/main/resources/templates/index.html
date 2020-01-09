@@ -41,19 +41,15 @@
    </div> 
   </div> 
   <div class="page-wrapper page"> 
-   <div class="user-menu"> 
-   <!-- <a target="_blank" class="btn btn-small" id="login_btn">登录</a>-->
-   <!-- <button target="_blank" class="btn btn-small" id="login_btn">登录</button>
-    <button target="_blank" class="btn btn-small" id="register_btn">注册</button>-->
-    <!--<a target="_blank" class="btn btn-small" id="register_btn">注册</a>-->
-       <!--   <span th:text="${}">这里显示用户昵称</span>-->
-       <a class="btn btn-small navbar-btn" target="_blank" data-sign="signin" href="#sign-modal" data-toggle="modal">登录/注册</a>
+   <div class="user-menu">
+       <a style=" display: inline;" id="loginregister" class="btn btn-small navbar-btn" target="_blank" data-sign="signin" href="#sign-modal" data-toggle="modal">登录/注册</a>
 
-       <a href="#0" class="language j-btn-menu" data-menu="lang-menu">联系开发者</a>
-       <div class="menu-list" id="lang-menu" style="float: right; text-align: right; position: absolute; right: 0px;">
+       <a style="display: none;" href="#0" id="gerenzhongnxin" class="language j-btn-menu" data-menu="lang-menu"><span id="innerr"></span></a>
+
+       <div  class="menu-list" id="lang-menu" >
         <ul>
-         <li><a href="#">17素材网</a></li>
-
+         <li><a th:href="@{/member/to/center.html}" id="toconter">个人中心</a></li>
+         <li><a th:href="@{#}" id="back">退出登录</a></li>
         </ul>
        </div>
       </div>
@@ -66,7 +62,7 @@
     <canvas id="canvasOne" class="dusty" width="1280" height="1420"></canvas> 
     <canvas id="canvasAustro" class="austro" width="600" height="640"></canvas> 
     <!-- <canvas id="canvasStars" class="bg-stars" width="600" height="640"></canvas> --> 
-    <div class="center"> 
+    <div class="center">
      <img src="../static/img/logo-main.png" alt="Easyrocket" class="logo-main centered" th:src="@{/img/logo-main.png}" />
      <h1 class="title title-big">周年庆典<span>Year</span></h1> 
      <h4 class="title title-small title-special">活动多多 - <span>惊喜不断</span></h4> 
@@ -510,19 +506,19 @@
              <img alt="验证码" onclick="this.src='/defaultKaptcha?d='+new Date()*1" src="/defaultKaptcha" />
          </div>
          <div class="form-group remember-login">
-          <input name="remember" type="checkbox" value="y"> 下次自动登录
-          <a class="pull-right" href="reset_password/index.html">忘记密码？</a>
+          <input name="remember" type="checkbox" value="y"> 下次自动登录(开发ing)
+          <a class="pull-right" th:href="@{/other/error.html}">忘记密码？</a>
          </div>
          <div class="form-group">
           <input class="btn btn-primary" id="loginsubmit" type="button" value="进入个人中心">
          </div>
          <div class="form-group widget-signin">
           <span>快速登录</span>
-          <a href="/auth/qq?next="><i class="fa fa-qq"></i></a>
-          <a href="/auth/weibo?next="><i class="fa fa-weibo"></i></a>
-          <a href="/auth/weixin?next="><i class="fa fa-weixin"></i></a>
-          <a href="/auth/github?next="><i class="fa fa-github"></i></a>
-          <a href="/auth/renren?next="><i class="fa fa-renren"></i></a>
+          <a th:href="@{/other/error.html}"><i class="fa fa-qq"></i></a>
+          <a th:href="@{/other/error.html}"><i class="fa fa-weibo"></i></a>
+          <a th:href="@{/other/error.html}"><i class="fa fa-weixin"></i></a>
+          <a th:href="@{/other/error.html}"><i class="fa fa-github"></i></a>
+          <a th:href="@{/other/error.html}"><i class="fa fa-renren"></i></a>
          </div>
          <div class="form-group error-msg">
           <div class="alert alert-danger" role="alert"></div>
@@ -576,15 +572,15 @@
           <input class="btn btn-primary" id="submit" type="button" value="注册">
          </div>
          <div class="form-group agree-privacy">
-          注册表示您已经同意我们的<a href="privacy/index.html" target="_blank">隐私条款</a>
+          注册表示您已经同意我们的<a th:href="@{/to/privacy.html}" target="_blank">隐私条款</a>
          </div>
          <div class="form-group widget-signup">
           <span>快速注册</span>
-          <a href="/auth/qq?next="><i class="fa fa-qq"></i></a>
-          <a href="/auth/weibo?next="><i class="fa fa-weibo"></i></a>
-          <a href="/auth/weixin?next="><i class="fa fa-weixin"></i></a>
-          <a href="/auth/github?next="><i class="fa fa-github"></i></a>
-          <a href="/auth/renren?next="><i class="fa fa-renren"></i></a>
+          <a th:href="@{/other/error.html}"><i class="fa fa-qq"></i></a>
+          <a th:href="@{/other/error.html}"><i class="fa fa-weibo"></i></a>
+          <a th:href="@{/other/error.html}"><i class="fa fa-weixin"></i></a>
+          <a th:href="@{/other/error.html}"><i class="fa fa-github"></i></a>
+          <a th:href="@{/other/error.html}"><i class="fa fa-renren"></i></a>
          </div>
          <div class="form-group error-msg">
           <div class="alert alert-danger" role="alert"></div>
@@ -693,7 +689,22 @@
                           $("#vercode").val("");
                           //关闭模态框
                           $("#sign-modal").modal("hide");
+                          var data = response.data;
+                          console.log(data);
                           //window.location.href = "[[@{/member/to/center.html}]]";
+
+                          var username = data.data.username;
+                          var token = data.data.token;
+                          var loginacct = data.data.loginacct;
+                          document.getElementById("innerr").innerText="   "+loginacct+"   ";
+                          sessionStorage.loginSuccessMember =JSON.stringify({
+                              "username":username,
+                              "token":token,
+                              "loginacct":loginacct
+                          });
+
+                          document.getElementById("gerenzhongnxin").style.display="inline";
+                          document.getElementById("loginregister").style.display="none";
                       }
                   },
                   "error":function(response){
